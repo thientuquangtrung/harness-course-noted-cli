@@ -1,0 +1,44 @@
+# AGENTS.md — noted-cli
+This repository is designed for long-running coding-agent work. The goal is not to maximize raw code output. The goal is to leave the repo in a state where the next session can continue without guessing.
+
+## Startup Workflow
+Before writing code:
+
+Confirm the working directory with pwd.
+Read claude-progress.md for the latest verified state and next step.
+Read feature_list.json and choose the highest-priority unfinished feature.
+Review recent commits with git log --oneline -5.
+Run ./init.sh.
+Run the required smoke or end-to-end verification before starting new work.
+If baseline verification is already failing, fix that first. Do not stack new feature work on top of a broken starting state.
+
+## Working Rules
+Work on one feature at a time.
+Do not mark a feature complete just because code was added.
+Keep changes within the selected feature scope unless a blocker forces a narrow supporting fix.
+Do not silently change verification rules during implementation.
+Prefer durable repo artifacts over chat summaries.
+
+## Required Artifacts
+
+- `AGENTS.md` (you are here): routing file for any agent session
+- `docs/ARCHITECTURE.md`: code map and data flow
+- `docs/PRODUCT.md`: scope, non-goals, definition of done
+- `feature_list.json`: source of truth for feature state (added in Module 08)
+
+## Definition Of Done
+A feature is done only when all of the following are true:
+
+the target behavior is implemented
+the required verification actually ran
+evidence is recorded in feature_list.json or claude-progress.md
+the repository remains restartable from the standard startup path
+
+## End Of Session
+Before ending a session:
+
+Update claude-progress.md.
+Update feature_list.json.
+Record any unresolved risk or blocker.
+Commit with a descriptive message once the work is in a safe state.
+Leave the repo clean enough for the next session to run ./init.sh immediately.
