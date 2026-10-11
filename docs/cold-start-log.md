@@ -19,19 +19,23 @@ the hard constraints at both the top and bottom; the full text and rationale
 live in `docs/citation-rule.md`. `ask.test.ts` now asserts the cite line, so
 a session that drops it fails `pnpm test` instead of slipping through.
 
-The fresh-session A/B run (steps 3 and 6) is still pending; protocol and
-result slots are in `course-runs/M04-results.md`.
+A/B run (3 fresh sessions per arm, other safeguards stripped): the cite
+line survived in 6/6 runs, so the bloated file did NOT reproduce the failure
+at 133 lines. The split arm resolved the conflict on its own (2 refusals with
+alternatives, 1 partial change keeping cite); the bloated arm stopped and
+asked 3/3 times. Details: `course-runs/M04-results.md`.
 
 ## 2026-10-11 (after Module 05)
 
 Added `PROGRESS.md` (Current State / Session Log / Next Action),
 `DECISIONS.md` (D-001, D-002) and `noted status`.
 
-Rebuild cost: the scripted clock-in (`pwd`, read `AGENTS.md`, Next Action,
-`DECISIONS.md` headings, `git log`, `pnpm test`, `./bin/noted status`) runs
-in ~1 s of machine time. That is not the human/agent read-through the module
-asks for; time a fresh-terminal read-aloud clock-in and record it here
-(course target: under 3 min, example ~90 s).
+Rebuild cost: **30 s.** A fresh `claude -p` session on a clean clone
+followed the AGENTS.md clock-in (read PROGRESS/DECISIONS, `git log`,
+`pnpm test`, `./bin/noted status`), changed no files, and correctly reported
+verified state, active feature, known issues, D-001/D-002 and the exact Next
+Action (`course-runs/M05-clockin-transcript.md`). Target < 3 min: met.
+Not measured: a human read-aloud clock-in.
 
 Knowledge visibility gap: Q4 (what is the current state / next step?) is now
 answered by `PROGRESS.md` and `noted status`. Q5 (feature state) still waits

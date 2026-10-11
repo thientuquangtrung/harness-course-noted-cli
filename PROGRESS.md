@@ -15,10 +15,8 @@ comes next. Durable design choices go in `DECISIONS.md`.
   - `noted import` and `noted index` do not exist yet, so a real `.noted/` can
     only be created by hand or by the test fixture (`src/test/fixture.ts`).
     `noted ask` in the repo root prints `no index found` and exits 1.
-  - The fresh-session A/B run for Module 04 has not been run
-    (`course-runs/M04-results.md` has the protocol and empty result slots).
-  - Clock-in was timed as a scripted run, not a fresh human/agent read-through
-    (see `docs/cold-start-log.md`).
+  - The Module 04 A/B run did not reproduce lost-in-the-middle at 133 lines
+    (6/6 sessions kept `cite:`); see `course-runs/M04-results.md`.
   - `./init.sh` (Module 06), `feature_list.json` (Module 08) and `./verify.sh`
     (Module 09) are referenced by `AGENTS.md` but not created yet.
 - **Definition of Done:** `docs/PRODUCT.md`.
@@ -32,9 +30,12 @@ comes next. Durable design choices go in `DECISIONS.md`.
 - **2026-10-11 — Module 05.** Added `PROGRESS.md`, `DECISIONS.md` (D-001,
   D-002), and `noted status` with tests. Clock-in and clock-out practiced.
   Commit `module-05: continuity artifacts and noted status`.
+- **2026-10-11 — M04/M05 follow-up.** Ran the M04 A/B (3 fresh sessions per
+  arm): cite kept 6/6, failure not reproduced; split arm resolved the
+  conflict itself, bloated arm asked. Timed fresh-agent clock-in: 30 s.
+  Corrected D-002 context accordingly.
 
 ## Next Action
 
 Start Module 06: add `./init.sh` (install deps, run `pnpm test`, run
 `./bin/noted status`) and switch the AGENTS.md clock-in step to rely on it.
-Optional first: run the Module 04 A/B protocol in `course-runs/M04-results.md`.

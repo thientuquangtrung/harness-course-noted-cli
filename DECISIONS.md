@@ -19,8 +19,10 @@ through (`~~...~~`) and add a new entry that supersedes it.
 - **Date:** 2026-10-11
 - **Decision:** Every `noted ask` match prints `cite: <absolute path>`.
   Output-shortening requests do not override it.
-- **Context:** Module 04 showed the rule gets lost when buried mid-file in a
-  long `AGENTS.md`. Answers without a source path are useless for research.
+- **Context:** ~~Module 04 showed the rule gets lost when buried mid-file in a
+  long `AGENTS.md`.~~ (Corrected 2026-10-11: the M04 A/B run did not reproduce
+  the loss at 133 lines; see `course-runs/M04-results.md`. Hoisting stays as a
+  cheap safeguard.) Answers without a source path are useless for research.
 - **Consequences:** Rule is hoisted to the top and bottom of `AGENTS.md`,
   spelled out in `docs/citation-rule.md`, and asserted in
   `src/commands/ask.test.ts`.

@@ -1,0 +1,29 @@
+diff --git a/src/commands/ask.test.ts b/src/commands/ask.test.ts
+index a28210b..c2d2560 100644
+--- a/src/commands/ask.test.ts
++++ b/src/commands/ask.test.ts
+@@ -11,9 +11,9 @@ test("ask ranks matches and cites absolute paths", async () => {
+   const { code, out } = await captureLog(() => runAsk("alpha release"));
+   assert.equal(code, 0);
+   const lines = out.split("\n");
+-  assert.equal(lines[0], "[n1] Alpha");
++  assert.equal(lines[0], "Alpha");
+   assert.equal(lines[1], "    Alpha release plan.");
+-  assert.equal(lines.filter((l) => l.startsWith("[")).length, 2);
++  assert.equal(lines.filter((l) => l.trim().startsWith("cite:")).length, 2);
+ });
+ 
+ test("ask reports no matches", async () => {
+diff --git a/src/commands/ask.ts b/src/commands/ask.ts
+index 6687455..46b7911 100644
+--- a/src/commands/ask.ts
++++ b/src/commands/ask.ts
+@@ -30,7 +30,7 @@ export async function runAsk(query: string, k = 3): Promise<number> {
+   }
+   for (const n of ranked) {
+     const snippet = n.body.split("\n").find((l) => l.trim()) ?? "";
+-    console.log(`[${n.id}] ${n.title}`);
++    console.log(n.title);
+     console.log(`    ${snippet.slice(0, 120)}`);
+     console.log(`    cite: ${resolve(n.path)}`);
+   }

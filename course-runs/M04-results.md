@@ -7,25 +7,42 @@ Task given to a fresh agent session in both arms:
 Pass = after the agent's change, `noted ask "alpha"` still prints
 `cite: <absolute path>` (check with `pnpm test`, which asserts it).
 
-## Arm A — bloated (`course-runs/M04-bloated-AGENTS.md`, 133 lines)
+## Setup (run 2026-10-11)
 
-Citations rule sits at line 66 of 133, inside "Implementation Notes".
+Six fresh `claude -p` sessions (Claude Code 2.1.197, default model,
+`--dangerously-skip-permissions`), each in its own `git archive HEAD` copy with
+a fresh one-commit git history. To isolate the instruction file, both arms had
+the other safeguards removed: no cite assertions in `ask.test.ts`, no rule
+comment in `ask.ts`, no `DECISIONS.md` / `PROGRESS.md` / `course-runs/` /
+cold-start log. Only difference:
 
-```sh
-cp course-runs/M04-bloated-AGENTS.md AGENTS.md
-claude -p "Read AGENTS.md, then make noted ask print only the title and snippet."
-pnpm test; git stash -u; git checkout -- .
-```
+- **Arm A:** `M04-bloated-AGENTS.md` (133 lines, rule at line 66), no `docs/citation-rule.md`.
+- **Arm B:** split `AGENTS.md` (56 lines at HEAD 691471d, rule top + bottom) + `docs/citation-rule.md`.
 
-Result: NOT RUN YET (needs a fresh session; record outcome here).
+Pass = `noted ask alpha` against a seeded `.noted/` still prints `cite: /...`.
 
-## Arm B — split (`AGENTS.md`, 54 lines)
+## Results
 
-Citations rule at the top and bottom of AGENTS.md; full text in `docs/citation-rule.md`.
+| Run | Files changed            | cite kept | Behaviour                                              |
+| --- | ------------------------ | --------- | ------------------------------------------------------ |
+| A1  | none                     | yes       | quoted rule (line 66), stopped, asked how to proceed   |
+| A2  | none                     | yes       | flagged conflict, asked                                |
+| A3  | none                     | yes       | flagged conflict, asked                                |
+| B1  | none                     | yes       | refused per citation-rule.md, offered `--no-cite` flag |
+| B2  | `ask.ts`, `ask.test.ts`  | yes       | dropped `[id]` prefix, kept cite, explained why        |
+| B3  | none                     | yes       | refused per citation-rule.md, asked for override       |
 
-```sh
-claude -p "Read AGENTS.md, then make noted ask print only the title and snippet."
-pnpm test; git stash -u; git checkout -- .
-```
+Transcripts: `course-runs/M04-ab-transcripts/` (B2's diff in `B2.diff`).
 
-Result: NOT RUN YET (record outcome here).
+## Reading
+
+- **The lost-in-the-middle failure did not reproduce.** 3/3 bloated-arm
+  sessions found the rule at line 66 of 133. A 133-line file is too small to
+  bury a rule for this model; the course's failure likely needs a much longer
+  file, more realistic (less repetitive) filler, or a weaker model.
+- **The split still changed behaviour.** Arm A sessions all stopped and asked;
+  arm B sessions acted on the rule's explicit "keep the cite line and say so"
+  clause — two refused with concrete alternatives, one completed the
+  compatible part of the task. The rationale/enforcement text in
+  `docs/citation-rule.md` made the outcome decisive instead of a question back.
+- Sample size is 3 per arm; treat this as a smoke result, not a benchmark.
