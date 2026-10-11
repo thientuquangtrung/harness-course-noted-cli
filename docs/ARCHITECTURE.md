@@ -20,7 +20,7 @@ markdown files            .noted/notes.json           .noted/index.json
 noted import ───────────► notes (id,path,title,body) ──► noted index ──► tokens
                                                              │
                                                              ▼
-                                                    noted ask (Module 04+)
+                                                    noted ask ──► top-k + cite: <abs path>
 
 ## Boundaries
 

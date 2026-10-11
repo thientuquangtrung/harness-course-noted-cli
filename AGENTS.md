@@ -1,44 +1,54 @@
 # AGENTS.md — noted-cli
-This repository is designed for long-running coding-agent work. The goal is not to maximize raw code output. The goal is to leave the repo in a state where the next session can continue without guessing.
 
-## Startup Workflow
-Before writing code:
+Routing file for any agent session. Read the hard constraints, then open only
+the topic docs your task needs.
 
-Confirm the working directory with pwd.
-Read claude-progress.md for the latest verified state and next step.
-Read feature_list.json and choose the highest-priority unfinished feature.
-Review recent commits with git log --oneline -5.
-Run ./init.sh.
-Run the required smoke or end-to-end verification before starting new work.
-If baseline verification is already failing, fix that first. Do not stack new feature work on top of a broken starting state.
+## Hard constraints (read first)
 
-## Working Rules
-Work on one feature at a time.
-Do not mark a feature complete just because code was added.
-Keep changes within the selected feature scope unless a blocker forces a narrow supporting fix.
-Do not silently change verification rules during implementation.
-Prefer durable repo artifacts over chat summaries.
+1. **One feature at a time.** Do not start a second feature until the first
+   meets the Definition of Done.
+2. **Citations rule.** Every `noted ask` line that names a note is followed by
+   `cite: <absolute path>`. Never remove or shorten it. See `docs/citation-rule.md`.
+3. **Definition of Done** lives in `docs/PRODUCT.md`. A feature is not done
+   because code was added; verification must have run and evidence must be recorded.
 
-## Required Artifacts
+## Topics
 
-- `AGENTS.md` (you are here): routing file for any agent session
-- `docs/ARCHITECTURE.md`: code map and data flow
-- `docs/PRODUCT.md`: scope, non-goals, definition of done
-- `feature_list.json`: source of truth for feature state (added in Module 08)
+| Topic          | File                     | Read when                                 |
+| -------------- | ------------------------ | ----------------------------------------- |
+| Architecture   | `docs/ARCHITECTURE.md`   | touching layout, data flow, boundaries    |
+| Product scope  | `docs/PRODUCT.md`        | deciding scope, non-goals, done criteria  |
+| Citation rule  | `docs/citation-rule.md`  | touching `noted ask` output               |
+| Style          | `docs/STYLE.md`          | writing or reviewing TypeScript           |
+| Session log    | `docs/cold-start-log.md` | measuring cold-start / rebuild cost       |
 
-## Definition Of Done
-A feature is done only when all of the following are true:
+## Workflow
 
-the target behavior is implemented
-the required verification actually ran
-evidence is recorded in feature_list.json or claude-progress.md
-the repository remains restartable from the standard startup path
+Clock-in:
 
-## End Of Session
-Before ending a session:
+1. `pwd` — confirm you are at the repo root.
+2. Read `PROGRESS.md` (Module 05) — latest verified state and Next Action.
+3. Read `feature_list.json` (Module 08) — pick the highest-priority unfinished feature.
+4. `git log --oneline -5` — review recent commits.
+5. Run `./init.sh` (Module 06), then `pnpm test`. If the baseline fails, fix
+   that first; never stack new work on a broken start.
 
-Update claude-progress.md.
-Update feature_list.json.
-Record any unresolved risk or blocker.
-Commit with a descriptive message once the work is in a safe state.
-Leave the repo clean enough for the next session to run ./init.sh immediately.
+Clock-out:
+
+1. Run `./verify.sh` (Module 09) or, until it exists, `pnpm test`.
+2. Update `PROGRESS.md` and `feature_list.json`; record unresolved risks.
+3. Commit with a descriptive message once the repo is in a safe state.
+
+Items marked with a module number do not exist yet; skip them until that module lands.
+
+## Working rules
+
+- Keep changes inside the selected feature; a blocker may justify a narrow supporting fix.
+- Do not silently change verification rules during implementation.
+- Prefer durable repo artifacts over chat summaries.
+
+## Hard constraints (repeated)
+
+1. **One feature at a time.**
+2. **Citations rule:** `noted ask` match lines keep `cite: <absolute path>` — `docs/citation-rule.md`.
+3. **Definition of Done:** `docs/PRODUCT.md`.
