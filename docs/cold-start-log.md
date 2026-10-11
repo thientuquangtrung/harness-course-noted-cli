@@ -21,3 +21,18 @@ a session that drops it fails `pnpm test` instead of slipping through.
 
 The fresh-session A/B run (steps 3 and 6) is still pending; protocol and
 result slots are in `course-runs/M04-results.md`.
+
+## 2026-10-11 (after Module 05)
+
+Added `PROGRESS.md` (Current State / Session Log / Next Action),
+`DECISIONS.md` (D-001, D-002) and `noted status`.
+
+Rebuild cost: the scripted clock-in (`pwd`, read `AGENTS.md`, Next Action,
+`DECISIONS.md` headings, `git log`, `pnpm test`, `./bin/noted status`) runs
+in ~1 s of machine time. That is not the human/agent read-through the module
+asks for; time a fresh-terminal read-aloud clock-in and record it here
+(course target: under 3 min, example ~90 s).
+
+Knowledge visibility gap: Q4 (what is the current state / next step?) is now
+answered by `PROGRESS.md` and `noted status`. Q5 (feature state) still waits
+on `feature_list.json` in Module 08 — 1 of 5 open, 20% (was 40%).

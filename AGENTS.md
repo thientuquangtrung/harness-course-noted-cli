@@ -21,17 +21,19 @@ the topic docs your task needs.
 | Citation rule  | `docs/citation-rule.md`  | touching `noted ask` output               |
 | Style          | `docs/STYLE.md`          | writing or reviewing TypeScript           |
 | Session log    | `docs/cold-start-log.md` | measuring cold-start / rebuild cost       |
+| Progress       | `PROGRESS.md`            | every clock-in and clock-out              |
+| Decisions      | `DECISIONS.md`           | before changing storage, output, or scope |
 
 ## Workflow
 
 Clock-in:
 
 1. `pwd` — confirm you are at the repo root.
-2. Read `PROGRESS.md` (Module 05) — latest verified state and Next Action.
+2. Read `PROGRESS.md` — latest verified state and Next Action. Skim `DECISIONS.md`.
 3. Read `feature_list.json` (Module 08) — pick the highest-priority unfinished feature.
 4. `git log --oneline -5` — review recent commits.
-5. Run `./init.sh` (Module 06), then `pnpm test`. If the baseline fails, fix
-   that first; never stack new work on a broken start.
+5. Run `./init.sh` (Module 06), then `pnpm test` and `./bin/noted status`.
+   If the baseline fails, fix that first; never stack new work on a broken start.
 
 Clock-out:
 

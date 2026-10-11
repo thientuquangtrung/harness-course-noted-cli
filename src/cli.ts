@@ -1,5 +1,6 @@
 import { createRequire } from "module";
 import { runAsk } from "./commands/ask.ts";
+import { runStatus } from "./commands/status.ts";
 
 const require = createRequire(import.meta.url);
 const { version } = require("../package.json") as { version: string };
@@ -13,6 +14,7 @@ if (args.length === 0 || args.includes("--help") || args.includes("-h")) {
   console.log("  noted --help          Print this help.");
   console.log("  noted version         Print the version.");
   console.log('  noted ask "<query>"   Show the top matching notes with citations.');
+  console.log("  noted status          Print note count, storage path, and Next Action.");
   process.exit(0);
 }
 
@@ -32,6 +34,8 @@ switch (args[0]) {
     }
     process.exit(await runAsk(query));
   }
+  case "status":
+    process.exit(await runStatus());
 }
 
 console.error(`unknown command: ${args.join(" ")}`);
